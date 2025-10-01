@@ -1,0 +1,103 @@
+/* Custom styles for the IAU Best Researcher Award application form */
+
+/* Main container styling */
+.container {
+    max-width: 1200px;
+}
+
+/* Card styling */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    border-radius: 8px 8px 0 0;
+}
+
+/* Form section styling */
+.section-title {
+    color: #0056b3;
+    margin-bottom: 20px;
+}
+
+/* Form field styling */
+.form-label {
+    font-weight: 500;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 0 0.25rem rgba(0, 86, 179, 0.25);
+}
+
+/* Publication entry styling */
+.publication-entry {
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.publication-entry:hover {
+    background-color: #e9ecef;
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-primary:hover {
+    background-color: #004494;
+    border-color: #004494;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+
+/* Validation styling */
+.field-validation-error {
+    color: #dc3545;
+    font-size: 0.875rem;
+}
+
+.input-validation-error {
+    border-color: #dc3545;
+}
+
+.input-validation-error:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .row {
+        margin-right: -8px;
+        margin-left: -8px;
+    }
+    
+    .col-md-6, .col-md-12 {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+}
+
+/* Footer styling */
+.footer {
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
