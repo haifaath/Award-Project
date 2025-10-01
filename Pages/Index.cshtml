@@ -1,0 +1,828 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "IAU Best Researcher Award Application";
+}
+
+<div class="container">
+    <form method="post" class="needs-validation" novalidate>
+        <!-- Section 1: Introduction -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2>Section 1: Introduction</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead">
+                    IAU Best Researcher Award is awarded annually based upon a distinguished record in research, scholarly or creative activities over the faculty member's academic career
+                </p>
+
+                <h4 class="mt-4">Eligibility Criteria</h4>
+                <ul>
+                    <li>The researcher must hold a regular faculty position at IAU.</li>
+                    <li>Minimum of 2-year service at IAU is essential (applies to newly recruited IAU faculty).</li>
+                    <li>The applicants must comply with the scientific publishing guidelines implemented by the university.</li>
+                    <li>Once awarded, re-nomination shall be considered after two years.</li>
+                    <li>A claim with insufficient documentary proof will not be considered for points' calculation.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 2: Researcher Information -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2>Section 2: Researcher Information</h2>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Researcher.Affiliation" class="form-label">Researcher Affiliation</label>
+                        <select asp-for="Researcher.Affiliation" class="form-select" required>
+                            <option value="">Please select the vice presidency/College you are affiliated to</option>
+                            @foreach (var option in Model.AffiliationOptions)
+                            {
+                                <option value="@option">@option</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Researcher.Affiliation" class="text-danger"></span>
+                        <div class="invalid-feedback">Please select your affiliation.</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Researcher.Name" class="form-label">Researcher Name</label>
+                        <input asp-for="Researcher.Name" class="form-control" required />
+                        <span asp-validation-for="Researcher.Name" class="text-danger"></span>
+                        <div class="invalid-feedback">Please enter your name.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Researcher.Discipline" class="form-label">Discipline/Subject Category</label>
+                        <input asp-for="Researcher.Discipline" class="form-control" required />
+                        <span asp-validation-for="Researcher.Discipline" class="text-danger"></span>
+                        <div class="invalid-feedback">Please enter your discipline/subject category.</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Researcher.PresentAppointment" class="form-label">Present Appointment</label>
+                        <input asp-for="Researcher.PresentAppointment" class="form-control" required />
+                        <span asp-validation-for="Researcher.PresentAppointment" class="text-danger"></span>
+                        <div class="invalid-feedback">Please enter your present appointment.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Researcher.DateOfJoining" class="form-label">Date of Joining IAU</label>
+                        <input asp-for="Researcher.DateOfJoining" class="form-control" type="date" required />
+                        <span asp-validation-for="Researcher.DateOfJoining" class="text-danger"></span>
+                        <div class="invalid-feedback">Please enter your date of joining IAU.</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Researcher.ResearchActiveYears" class="form-label">How long have you been active in research</label>
+                        <select asp-for="Researcher.ResearchActiveYears" class="form-select" required>
+                            <option value="">Please select</option>
+                            @foreach (var option in Model.ResearchActiveYearsOptions)
+                            {
+                                <option value="@option">@option</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Researcher.ResearchActiveYears" class="text-danger"></span>
+                        <div class="invalid-feedback">Please select how long you have been active in research.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Researcher.HighestQualification" class="form-label">Highest Qualification</label>
+                        <select asp-for="Researcher.HighestQualification" class="form-select" required>
+                            <option value="">Please select</option>
+                            @foreach (var option in Model.QualificationOptions)
+                            {
+                                <option value="@option">@option</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Researcher.HighestQualification" class="text-danger"></span>
+                        <div class="invalid-feedback">Please select your highest qualification.</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label asp-for="Researcher.SpecialisationArea" class="form-label">Area of Specialisation/Research Interest</label>
+                        <textarea asp-for="Researcher.SpecialisationArea" class="form-control" rows="3" required></textarea>
+                        <span asp-validation-for="Researcher.SpecialisationArea" class="text-danger"></span>
+                        <div class="invalid-feedback">Please enter your area of specialisation/research interest.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Research Profile -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2>Section 3: Research Profile</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead">Research Productivity (IAU affiliated publications over the last 5 years)</p>
+
+                <!-- A. Scientific Publications -->
+                <div class="mb-4">
+                    <h4>A. Scientific Publications</h4>
+                    <p>
+                        <strong>Instruction:</strong> List your top 10 scientific publications for the last 5 years in chronological order beginning with the most recent. 
+                        Attach the evidence of the journal classification according to IAU guidelines.
+                    </p>
+                    <ul>
+                        <li>Q1 and first author/corresponding author = 10 points</li>
+                        <li>Q1 and co-author = 5 points</li>
+                        <li>Q2 and first author/corresponding author = 5 points</li>
+                        <li>Q2 and co-author = 1 point</li>
+                    </ul>
+
+                    <div id="scientificPublicationsContainer">
+                        @for (int i = 0; i < Model.Researcher.ScientificPublications.Count; i++)
+                        {
+                            <div class="publication-entry card mb-3 p-3">
+                                <h5>Publication @(i + 1)</h5>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ScientificPublications[i].Title" class="form-label">Publication Title</label>
+                                        <input asp-for="Researcher.ScientificPublications[i].Title" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ScientificPublications[i].Title" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ScientificPublications[i].JournalTitle" class="form-label">Journal Title</label>
+                                        <input asp-for="Researcher.ScientificPublications[i].JournalTitle" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ScientificPublications[i].JournalTitle" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ScientificPublications[i].Quartile" class="form-label">Quartile</label>
+                                        <input asp-for="Researcher.ScientificPublications[i].Quartile" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ScientificPublications[i].Quartile" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ScientificPublications[i].PublicationYear" class="form-label">Publication Year</label>
+                                        <input asp-for="Researcher.ScientificPublications[i].PublicationYear" class="form-control" type="number" min="2020" max="2025" required />
+                                        <span asp-validation-for="Researcher.ScientificPublications[i].PublicationYear" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ScientificPublications[i].AuthorList" class="form-label">Author List</label>
+                                        <input asp-for="Researcher.ScientificPublications[i].AuthorList" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ScientificPublications[i].AuthorList" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ScientificPublications[i].PaperLink" class="form-label">Paper Link</label>
+                                        <input asp-for="Researcher.ScientificPublications[i].PaperLink" class="form-control" type="url" />
+                                        <span asp-validation-for="Researcher.ScientificPublications[i].PaperLink" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ScientificPublications[i].AuthorContribution" class="form-label">Author Contribution</label>
+                                        <select asp-for="Researcher.ScientificPublications[i].AuthorContribution" class="form-select" required>
+                                            <option value="">Please select</option>
+                                            @foreach (var option in Model.AuthorContributionOptions)
+                                            {
+                                                <option value="@option">@option</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="Researcher.ScientificPublications[i].AuthorContribution" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" id="addScientificPublication" class="btn btn-secondary">Add Another Publication</button>
+                </div>
+
+                <!-- B. Nature or Science Publications -->
+                <div class="mb-4">
+                    <h4>B. Nature or Science Publications</h4>
+                    <p>
+                        <strong>Instruction:</strong> List up to 10 Nature or Science publications if any for the last 5 years in chronological order beginning with the most recent.
+                    </p>
+                    <ul>
+                        <li>Corresponding author affiliation = 50 points</li>
+                        <li>First author affiliation (second author affiliation if the first author affiliation is the same as corresponding author affiliation) = 25 points</li>
+                        <li>Next author affiliation = 12.5 points</li>
+                        <li>Other author affiliations = 5 points</li>
+                    </ul>
+
+                    <div id="natureSciencePublicationsContainer">
+                        @for (int i = 0; i < Model.Researcher.NatureSciencePublications.Count; i++)
+                        {
+                            <div class="publication-entry card mb-3 p-3">
+                                <h5>Publication @(i + 1)</h5>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.NatureSciencePublications[i].Title" class="form-label">Publication Title</label>
+                                        <input asp-for="Researcher.NatureSciencePublications[i].Title" class="form-control" required />
+                                        <span asp-validation-for="Researcher.NatureSciencePublications[i].Title" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.NatureSciencePublications[i].JournalTitle" class="form-label">Journal Title</label>
+                                        <input asp-for="Researcher.NatureSciencePublications[i].JournalTitle" class="form-control" required />
+                                        <span asp-validation-for="Researcher.NatureSciencePublications[i].JournalTitle" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.NatureSciencePublications[i].Quartile" class="form-label">Quartile</label>
+                                        <input asp-for="Researcher.NatureSciencePublications[i].Quartile" class="form-control" required />
+                                        <span asp-validation-for="Researcher.NatureSciencePublications[i].Quartile" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.NatureSciencePublications[i].PublicationYear" class="form-label">Publication Year</label>
+                                        <input asp-for="Researcher.NatureSciencePublications[i].PublicationYear" class="form-control" type="number" min="2020" max="2025" required />
+                                        <span asp-validation-for="Researcher.NatureSciencePublications[i].PublicationYear" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.NatureSciencePublications[i].AuthorList" class="form-label">Author List</label>
+                                        <input asp-for="Researcher.NatureSciencePublications[i].AuthorList" class="form-control" required />
+                                        <span asp-validation-for="Researcher.NatureSciencePublications[i].AuthorList" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.NatureSciencePublications[i].PaperLink" class="form-label">Paper Link</label>
+                                        <input asp-for="Researcher.NatureSciencePublications[i].PaperLink" class="form-control" type="url" />
+                                        <span asp-validation-for="Researcher.NatureSciencePublications[i].PaperLink" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.NatureSciencePublications[i].AuthorContribution" class="form-label">Author Contribution</label>
+                                        <select asp-for="Researcher.NatureSciencePublications[i].AuthorContribution" class="form-select" required>
+                                            <option value="">Please select</option>
+                                            @foreach (var option in Model.NatureAuthorContributionOptions)
+                                            {
+                                                <option value="@option">@option</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="Researcher.NatureSciencePublications[i].AuthorContribution" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" id="addNatureSciencePublication" class="btn btn-secondary">Add More</button>
+                </div>
+
+                <!-- C. Books -->
+                <div class="mb-4">
+                    <h4>C. Books</h4>
+                    <p>
+                        <strong>Instruction:</strong> List up to 10 published books for the last 5 years in chronological order beginning with the most recent. 
+                        Attached a copy of the book with the approval letter by the IAU Scientific Council or IAU Centre for Scientific Publications.
+                    </p>
+                    <ul>
+                        <li>Authored Book (first author) = 15 points</li>
+                        <li>Authored Book (co-author) = 10 points</li>
+                        <li>Edited Book (first author) = 10 points</li>
+                        <li>Edited Book (co-author) = 5 points</li>
+                        <li>Authored Book Chapter (first author) = 5 point</li>
+                        <li>Authored Book Chapter (co-author) = 3 point</li>
+                    </ul>
+
+                    <div id="booksContainer">
+                        @for (int i = 0; i < Model.Researcher.Books.Count; i++)
+                        {
+                            <div class="book-entry card mb-3 p-3">
+                                <h5>Book @(i + 1)</h5>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.Books[i].Title" class="form-label">Book Title</label>
+                                        <input asp-for="Researcher.Books[i].Title" class="form-control" required />
+                                        <span asp-validation-for="Researcher.Books[i].Title" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.Books[i].Publisher" class="form-label">Publisher</label>
+                                        <input asp-for="Researcher.Books[i].Publisher" class="form-control" required />
+                                        <span asp-validation-for="Researcher.Books[i].Publisher" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.Books[i].Year" class="form-label">Year</label>
+                                        <input asp-for="Researcher.Books[i].Year" class="form-control" type="number" min="2020" max="2025" required />
+                                        <span asp-validation-for="Researcher.Books[i].Year" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.Books[i].ISBN" class="form-label">ISBN</label>
+                                        <input asp-for="Researcher.Books[i].ISBN" class="form-control" required />
+                                        <span asp-validation-for="Researcher.Books[i].ISBN" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <label asp-for="Researcher.Books[i].LinkOrPdf" class="form-label">Link or PDF</label>
+                                        <input asp-for="Researcher.Books[i].LinkOrPdf" class="form-control" />
+                                        <span asp-validation-for="Researcher.Books[i].LinkOrPdf" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" id="addBook" class="btn btn-secondary">Add More</button>
+                </div>
+
+                <!-- Scientific Research Abstracts -->
+                <div class="mb-4">
+                    <h4>Scientific Research Abstracts Presented in Refereed Specialized Scientific Conferences</h4>
+                    <p>
+                        <strong>Instruction:</strong> List up to 10 scientific conferences participation with a submitted abstract for the last 5 years in chronological order beginning with the most recent. 
+                        Attach a copy of the certificate of participation for each listed conference participation.
+                    </p>
+                    <ul>
+                        <li>Oral presentation (International)** = 5 points</li>
+                        <li>Poster presentation (International)** = 3 points</li>
+                        <li>Oral presentation (National) = 3 points</li>
+                        <li>Poster presentation (National) = 1 point</li>
+                    </ul>
+                    <p>**International: attach the approval letter of participation by the Conferences and Seminars System.</p>
+
+                    <div id="researchAbstractsContainer">
+                        @for (int i = 0; i < Model.Researcher.ResearchAbstracts.Count; i++)
+                        {
+                            <div class="abstract-entry card mb-3 p-3">
+                                <h5>Research Abstract @(i + 1)</h5>
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <label asp-for="Researcher.ResearchAbstracts[i].Title" class="form-label">Research Abstract Title</label>
+                                        <input asp-for="Researcher.ResearchAbstracts[i].Title" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ResearchAbstracts[i].Title" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <label asp-for="Researcher.ResearchAbstracts[i].ConferenceDetails" class="form-label">Scientific Conference Name, Location and Date</label>
+                                        <input asp-for="Researcher.ResearchAbstracts[i].ConferenceDetails" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ResearchAbstracts[i].ConferenceDetails" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ResearchAbstracts[i].Investigators" class="form-label">Investigator(s)</label>
+                                        <input asp-for="Researcher.ResearchAbstracts[i].Investigators" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ResearchAbstracts[i].Investigators" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ResearchAbstracts[i].ParticipationType" class="form-label">Type of Participation (Oral, Poster)</label>
+                                        <input asp-for="Researcher.ResearchAbstracts[i].ParticipationType" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ResearchAbstracts[i].ParticipationType" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <label asp-for="Researcher.ResearchAbstracts[i].AbstractLink" class="form-label">Abstract Link</label>
+                                        <input asp-for="Researcher.ResearchAbstracts[i].AbstractLink" class="form-control" type="url" />
+                                        <span asp-validation-for="Researcher.ResearchAbstracts[i].AbstractLink" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" id="addResearchAbstract" class="btn btn-secondary">Add More</button>
+                </div>
+
+                <!-- IAU Excellence Awards -->
+                <div class="mb-4">
+                    <h4>IAU Excellence Awards</h4>
+                    <p>
+                        <strong>Instruction:</strong> List up to 10 excellence awards for the last 5 years. 
+                        Attach a copy of the IAU award letter for each listed award (approval via the Scientific Council system).
+                    </p>
+                    <ul>
+                        <li>A-class Award = 10 points</li>
+                        <li>B-class Award = 5 points</li>
+                        <li>C-class Award = 1 point</li>
+                    </ul>
+
+                    <div id="excellenceAwardsContainer">
+                        @for (int i = 0; i < Model.Researcher.ExcellenceAwards.Count; i++)
+                        {
+                            <div class="award-entry card mb-3 p-3">
+                                <h5>Award @(i + 1)</h5>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ExcellenceAwards[i].AwardDetails" class="form-label">Award Details</label>
+                                        <input asp-for="Researcher.ExcellenceAwards[i].AwardDetails" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ExcellenceAwards[i].AwardDetails" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ExcellenceAwards[i].AwardClass" class="form-label">Award Class</label>
+                                        <select asp-for="Researcher.ExcellenceAwards[i].AwardClass" class="form-select" required>
+                                            <option value="">Please select</option>
+                                            <option value="A-class">A-class</option>
+                                            <option value="B-class">B-class</option>
+                                            <option value="C-class">C-class</option>
+                                        </select>
+                                        <span asp-validation-for="Researcher.ExcellenceAwards[i].AwardClass" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" id="addExcellenceAward" class="btn btn-secondary">Add More</button>
+                </div>
+
+                <!-- Research Grants -->
+                <div class="mb-4">
+                    <h4>Research Grants</h4>
+                    <p>
+                        <strong>Instruction:</strong> List up to 10 awarded research grants for the last 5 years. 
+                        Attach a copy of the letter of the award for each listed research grant.
+                    </p>
+                    <ul>
+                        <li>PI (External grant) = 10 points</li>
+                        <li>Co-PI (External grant) = 5 points</li>
+                        <li>Grant contributor researcher (External grant) = 3 points</li>
+                        <li>PI (Internal grant) = 5 points</li>
+                        <li>Co-PI (Internal grant) = 3 points</li>
+                        <li>Grant contributor researcher (Internal grant) = 1 point</li>
+                        <li>Other research income (Industrial collaboration, etc.) = 1 point</li>
+                    </ul>
+
+                    <div id="researchGrantsContainer">
+                        @for (int i = 0; i < Model.Researcher.ResearchGrants.Count; i++)
+                        {
+                            <div class="grant-entry card mb-3 p-3">
+                                <h5>Grant @(i + 1)</h5>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ResearchGrants[i].Title" class="form-label">Grant Title</label>
+                                        <input asp-for="Researcher.ResearchGrants[i].Title" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ResearchGrants[i].Title" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ResearchGrants[i].AwardingBody" class="form-label">Awarding Body</label>
+                                        <input asp-for="Researcher.ResearchGrants[i].AwardingBody" class="form-control" required />
+                                        <span asp-validation-for="Researcher.ResearchGrants[i].AwardingBody" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ResearchGrants[i].GrantType" class="form-label">Grant Type</label>
+                                        <select asp-for="Researcher.ResearchGrants[i].GrantType" class="form-select" required>
+                                            <option value="">Please select</option>
+                                            <option value="External">External</option>
+                                            <option value="Internal">Internal</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                        <span asp-validation-for="Researcher.ResearchGrants[i].GrantType" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.ResearchGrants[i].Role" class="form-label">PI, Co-PI or Contributor Researcher</label>
+                                        <select asp-for="Researcher.ResearchGrants[i].Role" class="form-select" required>
+                                            <option value="">Please select</option>
+                                            <option value="PI">PI</option>
+                                            <option value="Co-PI">Co-PI</option>
+                                            <option value="Contributor Researcher">Contributor Researcher</option>
+                                        </select>
+                                        <span asp-validation-for="Researcher.ResearchGrants[i].Role" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" id="addResearchGrant" class="btn btn-secondary">Add More</button>
+                </div>
+
+                <!-- Patents -->
+                <div class="mb-4">
+                    <h4>Patents</h4>
+                    <p>
+                        <strong>Instruction:</strong> List up to 10 approved granted patents for the last 5 years. 
+                        Attach a copy of the patent certificate for each listed patent.
+                    </p>
+                    <ul>
+                        <li>1 Patent (first inventor) = 10 points</li>
+                        <li>1 Patent (co-inventor) = 5 points</li>
+                    </ul>
+
+                    <div id="patentsContainer">
+                        @for (int i = 0; i < Model.Researcher.Patents.Count; i++)
+                        {
+                            <div class="patent-entry card mb-3 p-3">
+                                <h5>Patent @(i + 1)</h5>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.Patents[i].PatentDetails" class="form-label">Patent Details</label>
+                                        <textarea asp-for="Researcher.Patents[i].PatentDetails" class="form-control" rows="3" required></textarea>
+                                        <span asp-validation-for="Researcher.Patents[i].PatentDetails" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.Patents[i].InventorRole" class="form-label">Inventor Role</label>
+                                        <select asp-for="Researcher.Patents[i].InventorRole" class="form-select" required>
+                                            <option value="">Please select</option>
+                                            <option value="First Inventor">First Inventor</option>
+                                            <option value="Co-Inventor">Co-Inventor</option>
+                                        </select>
+                                        <span asp-validation-for="Researcher.Patents[i].InventorRole" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" id="addPatent" class="btn btn-secondary">Add More</button>
+                </div>
+
+                <!-- Research-Related Prizes/Awards -->
+                <div class="mb-4">
+                    <h4>Research-Related Prizes/Awards</h4>
+                    <p>
+                        <strong>Instruction:</strong> List up to 10 research-related scientific prizes/awards for the last 5 years. 
+                        Attach a copy of the prize/award certificate for each listed prize/award. Only prizes/awards received from an authorized entity will be accepted.
+                    </p>
+                    <p>Research-related prize/award = 5 points</p>
+                    <p>**The committee reserves the right to grant more points if deemed appropriate.</p>
+
+                    <div id="researchPrizesContainer">
+                        @for (int i = 0; i < Model.Researcher.ResearchPrizes.Count; i++)
+                        {
+                            <div class="prize-entry card mb-3 p-3">
+                                <h5>Prize/Award @(i + 1)</h5>
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <label asp-for="Researcher.ResearchPrizes[i].PrizeDetails" class="form-label">Prize/Award Details</label>
+                                        <textarea asp-for="Researcher.ResearchPrizes[i].PrizeDetails" class="form-control" rows="3" required></textarea>
+                                        <span asp-validation-for="Researcher.ResearchPrizes[i].PrizeDetails" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" id="addResearchPrize" class="btn btn-secondary">Add More</button>
+                </div>
+
+                <!-- Students' Research Supervision -->
+                <div class="mb-4">
+                    <h4>Students' Research Supervision</h4>
+                    <p>
+                        <strong>Instruction:</strong> List up to 10 completed students' research supervision experience for the last 5 years. 
+                        Attach a copy of the degree award letter for completed Ph.D. and master's thesis and the SIS screenshot for completed Bachelor dissertations.
+                    </p>
+                    <ul>
+                        <li>Ph.D. thesis = 3 points</li>
+                        <li>Master's thesis = 2 points</li>
+                        <li>Bachelor dissertation = 1 point</li>
+                        <li>Others (Mawhiba Program, etc.) = 1 point</li>
+                    </ul>
+
+                    <div id="studentSupervisionsContainer">
+                        @for (int i = 0; i < Model.Researcher.StudentSupervisions.Count; i++)
+                        {
+                            <div class="supervision-entry card mb-3 p-3">
+                                <h5>Supervision @(i + 1)</h5>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.StudentSupervisions[i].SupervisionDetails" class="form-label">Supervision Details</label>
+                                        <textarea asp-for="Researcher.StudentSupervisions[i].SupervisionDetails" class="form-control" rows="3" required></textarea>
+                                        <span asp-validation-for="Researcher.StudentSupervisions[i].SupervisionDetails" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Researcher.StudentSupervisions[i].SupervisionType" class="form-label">Supervision Type</label>
+                                        <select asp-for="Researcher.StudentSupervisions[i].SupervisionType" class="form-select" required>
+                                            <option value="">Please select</option>
+                                            <option value="Ph.D. thesis">Ph.D. thesis</option>
+                                            <option value="Master's thesis">Master's thesis</option>
+                                            <option value="Bachelor dissertation">Bachelor dissertation</option>
+                                            <option value="Others">Others (Mawhiba Program, etc.)</option>
+                                        </select>
+                                        <span asp-validation-for="Researcher.StudentSupervisions[i].SupervisionType" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" id="addStudentSupervision" class="btn btn-secondary">Add More</button>
+                </div>
+
+                <!-- Other Scientific Excellence Related Practices -->
+                <div class="mb-4">
+                    <h4>Other Scientific Excellence Related Practices</h4>
+                    <p>
+                        <strong>Instruction:</strong> List other scientific excellence related practices for the last 5 years. Attach evidence of each listed item. For example:
+                    </p>
+                    <ul>
+                        <li>Formal collaboration/involvement at international level including honorary contracts, (Summer) Scientific Visit invitation, etc.</li>
+                        <li>Conferences based grants awards, e.g. travel awards, etc.</li>
+                        <li>Professional society fellowships.</li>
+                        <li>Journal Editor or Editorial board member</li>
+                    </ul>
+                    <p>Write a concise summary describing the achievements/contributions. Each item will be subject to review by the committee to be accepted or rejected. For accepted items, the committee will grant 1 point per listed item.</p>
+
+                    <div id="otherExcellencesContainer">
+                        @for (int i = 0; i < Model.Researcher.OtherScientificExcellences.Count; i++)
+                        {
+                            <div class="other-entry card mb-3 p-3">
+                                <h5>Achievement @(i + 1)</h5>
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <label asp-for="Researcher.OtherScientificExcellences[i].AchievementDetails" class="form-label">Achievement Details</label>
+                                        <textarea asp-for="Researcher.OtherScientificExcellences[i].AchievementDetails" class="form-control" rows="3" required></textarea>
+                                        <span asp-validation-for="Researcher.OtherScientificExcellences[i].AchievementDetails" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" id="addOtherExcellence" class="btn btn-secondary">Add More</button>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // Client-side validation
+        (function () {
+            'use strict'
+
+            // Fetch all forms that need validation
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        // Add more scientific publications
+        document.getElementById('addScientificPublication').addEventListener('click', function() {
+            const container = document.getElementById('scientificPublicationsContainer');
+            const publicationCount = container.children.length;
+            
+            if (publicationCount < 10) {
+                // Clone the first publication entry
+                const template = container.children[0].cloneNode(true);
+                
+                // Update the heading
+                template.querySelector('h5').textContent = `Publication ${publicationCount + 1}`;
+                
+                // Clear input values
+                template.querySelectorAll('input').forEach(input => {
+                    // Keep the name attribute structure but clear the value
+                    input.value = '';
+                });
+                
+                // Reset select elements
+                template.querySelectorAll('select').forEach(select => {
+                    select.selectedIndex = 0;
+                });
+                
+                // Update the indices in the name and id attributes
+                updateElementIndices(template, 'ScientificPublications', publicationCount);
+                
+                // Add the new entry to the container
+                container.appendChild(template);
+            } else {
+                alert('You can add a maximum of 10 publications.');
+            }
+        });
+
+        // Add more Nature/Science publications
+        document.getElementById('addNatureSciencePublication').addEventListener('click', function() {
+            const container = document.getElementById('natureSciencePublicationsContainer');
+            const publicationCount = container.children.length;
+            
+            if (publicationCount < 10) {
+                // Clone the first publication entry
+                const template = container.children[0].cloneNode(true);
+                
+                // Update the heading
+                template.querySelector('h5').textContent = `Publication ${publicationCount + 1}`;
+                
+                // Clear input values
+                template.querySelectorAll('input').forEach(input => {
+                    input.value = '';
+                });
+                
+                // Reset select elements
+                template.querySelectorAll('select').forEach(select => {
+                    select.selectedIndex = 0;
+                });
+                
+                // Update the indices in the name and id attributes
+                updateElementIndices(template, 'NatureSciencePublications', publicationCount);
+                
+                // Add the new entry to the container
+                container.appendChild(template);
+            } else {
+                alert('You can add a maximum of 10 publications.');
+            }
+        });
+
+        // Setup all other dynamic sections
+        setupDynamicSection('addBook', 'booksContainer', 'Books');
+        setupDynamicSection('addResearchAbstract', 'researchAbstractsContainer', 'ResearchAbstracts');
+        setupDynamicSection('addExcellenceAward', 'excellenceAwardsContainer', 'ExcellenceAwards');
+        setupDynamicSection('addResearchGrant', 'researchGrantsContainer', 'ResearchGrants');
+        setupDynamicSection('addPatent', 'patentsContainer', 'Patents');
+        setupDynamicSection('addResearchPrize', 'researchPrizesContainer', 'ResearchPrizes');
+        setupDynamicSection('addStudentSupervision', 'studentSupervisionsContainer', 'StudentSupervisions');
+        setupDynamicSection('addOtherExcellence', 'otherExcellencesContainer', 'OtherScientificExcellences');
+
+        // Helper function to setup a dynamic section
+        function setupDynamicSection(buttonId, containerId, fieldName) {
+            const button = document.getElementById(buttonId);
+            if (!button) return; // Skip if button doesn't exist
+            
+            button.addEventListener('click', function() {
+                const container = document.getElementById(containerId);
+                if (!container) return; // Skip if container doesn't exist
+                
+                const entryCount = container.children.length;
+                
+                if (entryCount < 10) {
+                    // Clone the first entry
+                    const template = container.children[0].cloneNode(true);
+                    
+                    // Update the heading if it exists
+                    const heading = template.querySelector('h5');
+                    if (heading) {
+                        heading.textContent = heading.textContent.replace(/\d+/, entryCount + 1);
+                    }
+                    
+                    // Clear input values
+                    template.querySelectorAll('input').forEach(input => {
+                        input.value = '';
+                    });
+                    
+                    // Reset select elements
+                    template.querySelectorAll('select').forEach(select => {
+                        select.selectedIndex = 0;
+                    });
+                    
+                    // Clear textarea elements
+                    template.querySelectorAll('textarea').forEach(textarea => {
+                        textarea.value = '';
+                    });
+                    
+                    // Update the indices in the name and id attributes
+                    updateElementIndices(template, fieldName, entryCount);
+                    
+                    // Add the new entry to the container
+                    container.appendChild(template);
+                    
+                    // Remove validation classes from the new entry
+                    template.querySelectorAll('.is-invalid, .is-valid').forEach(el => {
+                        el.classList.remove('is-invalid', 'is-valid');
+                    });
+                    
+                    // Focus on the first input in the new entry
+                    const firstInput = template.querySelector('input, select, textarea');
+                    if (firstInput) {
+                        firstInput.focus();
+                    }
+                } else {
+                    alert('You can add a maximum of 10 entries.');
+                }
+            });
+        }
+
+        // Helper function to update indices in element attributes
+        function updateElementIndices(element, fieldName, newIndex) {
+            // Update input, select, and textarea elements
+            element.querySelectorAll('input, select, textarea').forEach(input => {
+                if (input.name) {
+                    input.name = input.name.replace(/\[\d+\]/, `[${newIndex}]`);
+                }
+                if (input.id) {
+                    input.id = input.id.replace(/\_\d+\_/, `_${newIndex}_`);
+                }
+            });
+            
+            // Update label elements
+            element.querySelectorAll('label').forEach(label => {
+                if (label.htmlFor) {
+                    label.htmlFor = label.htmlFor.replace(/\_\d+\_/, `_${newIndex}_`);
+                }
+            });
+            
+            // Update validation spans
+            element.querySelectorAll('span[data-valmsg-for]').forEach(span => {
+                if (span.dataset.valmsgFor) {
+                    span.dataset.valmsgFor = span.dataset.valmsgFor.replace(/\[\d+\]/, `[${newIndex}]`);
+                }
+            });
+        }
+    </script>
+}

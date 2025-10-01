@@ -1,0 +1,25 @@
+@page
+@model SuccessModel
+@{
+    ViewData["Title"] = "Application Submitted";
+}
+
+<div class="container">
+    <div class="card mt-4">
+        <div class="card-header bg-success text-white">
+            <h2>Application Submitted Successfully</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Thank you for your submission!</h4>
+                <p>Your application for the IAU Best Researcher Award has been successfully submitted.</p>
+                <hr>
+                <p class="mb-0">You will receive a confirmation email shortly. If you have any questions, please contact the research office.</p>
+            </div>
+            
+            <div class="mt-4">
+                <a asp-page="Index" class="btn btn-primary">Submit Another Application</a>
+            </div>
+        </div>
+    </div>
+</div>
